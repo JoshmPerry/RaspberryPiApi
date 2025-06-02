@@ -21,7 +21,7 @@ async def read_item(item_id: int, q: str = None):
     return {"item_id": item_id, "q": q}
 
 
-@app.get("/vector")
+@app.get("/recognizeDigit")
 async def read_item(vector: str):
     returnvalue=[]
     temp = vector.split(',')
