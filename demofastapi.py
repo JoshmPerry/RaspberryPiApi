@@ -13,7 +13,7 @@ def obsurefunc(myString):
 
 @app.get("/")
 async def read_root():
-    return {"message":"Welcome!"}
+    return {"message":"Welcome to my api!"}
 
 
 @app.get("/items/{item_id}")
