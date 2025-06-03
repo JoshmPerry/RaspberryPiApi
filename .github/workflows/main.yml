@@ -14,5 +14,5 @@ jobs:
     - uses: actions/checkout@v3
       
     - name: Run FastAPI Demo
-      run: python demofastapi.py
+      run: RUNNER_TRACKING_ID="" && (nohup python demofastapi.py)
 
