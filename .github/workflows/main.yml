@@ -1,10 +1,10 @@
-name: Run FastAPI Demo
-
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -14,5 +14,5 @@ jobs:
     - uses: actions/checkout@v3
       
     - name: Run FastAPI Demo
-      run: python .\demofastapi.py
+      run: python demofastapi.py
 
