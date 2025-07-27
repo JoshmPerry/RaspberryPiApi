@@ -11,5 +11,5 @@ class PCAController:
         async def pca_endpoint(request: ImageRequest):
             data_list = request.data
             # Perform PCA on the data
-            pca_result = self.PCAService.compressThenReconstruct(data_list)
+            pca_result = list(self.PCAService.compressThenReconstruct(data_list))
             return ImageResponse(data=pca_result)
