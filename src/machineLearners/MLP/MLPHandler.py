@@ -8,7 +8,7 @@ from torch.utils.data import TensorDataset, DataLoader
 
 
 # Hyperparameters
-EPOCHS = 50
+EPOCHS = 100
 LEARNING_RATE = 0.001
 HIDDEN_SIZE = 40
 BATCH_SIZE = 32
@@ -22,7 +22,7 @@ class MLPHandler:
         data = np.array(data)[idx]
         labels = np.array(labels)[idx]
 
-        train_x, valid_x, train_y, valid_y = helper.train_valid_split(data, labels, 1000)
+        train_x, valid_x, train_y, valid_y = helper.train_valid_split(data, labels, 2600)
         train_X_all = torch.tensor(train_x, dtype=torch.float32)
         valid_X_all = torch.tensor(valid_x, dtype=torch.float32)
         train_y_all = torch.tensor(train_y, dtype=torch.long)
