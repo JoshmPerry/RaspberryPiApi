@@ -74,5 +74,8 @@ class MLPHandler:
             data_tensor = torch.tensor(data, dtype=torch.float32)
             outputs = self.model(data_tensor)
             probs = torch.softmax(outputs, 0)
+            print(probs)
             confidences, predicted = torch.max(probs, 0)
+            print(predicted)
+            print(confidences)
             return predicted.numpy(), confidences.numpy()
