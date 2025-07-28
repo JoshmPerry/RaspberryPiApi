@@ -6,7 +6,6 @@ import torch.optim as optim
 import numpy as np
 from torch.utils.data import TensorDataset, DataLoader
 
-
 # Hyperparameters
 EPOCHS = 50
 LEARNING_RATE = 0.001
