@@ -10,7 +10,7 @@ from torch.utils.data import TensorDataset, DataLoader
 # Hyperparameters
 EPOCHS = 50
 LEARNING_RATE = 0.001
-HIDDEN_SIZE = 30
+HIDDEN_SIZE = 40
 BATCH_SIZE = 32
 
 class MLPHandler:
@@ -32,7 +32,7 @@ class MLPHandler:
         train_dataset = TensorDataset(train_X_all, train_y_all)
         train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
 
-        self.model = mlp.MLP(input_size=train_X_all.shape[1], hidden_size=HIDDEN_SIZE, output_size=10)
+        self.model = mlp.MLP(input_size=train_X_all.shape[1], output_size=10)
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(self.model.parameters(), lr=LEARNING_RATE)
 
