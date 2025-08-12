@@ -10,9 +10,9 @@ class MLPService:
         self.train("./data/PCA/USPS.mat")
     def train(self, path):
         data, ys = helper.load_data(path)
-        self.pca.train(data)
-        simplifiedData = self.pca.test(data)
-        self.MLPHandler.train(simplifiedData, ys)
+        #self.pca.train(data)
+        #simplifiedData = self.pca.test(data)
+        self.MLPHandler.train(data, ys)
     def predict(self, data):
-        simplifiedData = image_helper.preprocess_image(self.pca.test(data))
-        return self.MLPHandler.predict(simplifiedData)
+        #simplifiedData = image_helper.preprocess_image(self.pca.test(data))
+        return self.MLPHandler.predict(data)
