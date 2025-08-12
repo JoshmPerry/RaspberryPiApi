@@ -1,6 +1,6 @@
 import utils.PCAHelper as helper
 import machineLearners.PCA as pca
-import machineLearners.MLP.MLPHandler as mlphandler
+import machineLearners.MLPHandler as mlphandler
 import utils.ImageHelper as image_helper
 
 class MLPService:
