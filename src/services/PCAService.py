@@ -13,5 +13,8 @@ class PCAService:
     def reconstruct(self, data):
         return self.pca.reconstruct(data)
     def compressThenReconstruct(self, data):
+        #TODO: Remove
+        data, _ = helper.load_data(data)
+        return data[range(0, 1000)]
         compressed = self.compress(data)
         return self.reconstruct(compressed)
