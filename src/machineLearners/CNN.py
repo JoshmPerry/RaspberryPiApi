@@ -5,11 +5,14 @@ import numpy as np
 import tensorflow as tf
 from torch.utils.data import TensorDataset, DataLoader
 
-class MLP:
+class CNN:
     def __init__(self):
         self.model = tf.keras.models.Sequential([
-            tf.keras.layers.Dense(128, activation='relu'),
-            tf.keras.layers.Dropout(0.2),
+            tf.keras.layers.Conv2D(32, (3, 3), activation='relu', input_shape=(16,16,1)),
+            tf.keras.layers.MaxPooling2D((2, 2)),
+            tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
+            tf.keras.layers.MaxPooling2D((2, 2)),
+            tf.keras.layers.Flatten(),
             tf.keras.layers.Dense(128, activation='relu'),
             tf.keras.layers.Dropout(0.2),
             tf.keras.layers.Dense(10, activation='softmax')
@@ -21,6 +24,11 @@ class MLP:
         idx = np.random.permutation(len(data))
         x_all = np.array(data)[idx]
         y_all = np.array(labels)[idx]
+
+        x_all = x_all.astype(np.float32)
+        if len(x_all.shape) == 3:
+            # Add channel dimension if missing (e.g., grayscale images)
+            x_all = np.expand_dims(x_all, -1)
 
         # Split into train/test (e.g., 80/20 split)
         split_idx = int(0.8 * len(x_all))
@@ -49,8 +57,11 @@ class MLP:
     def predict(self, data):
         if self.confidenceModel is None:
             raise ValueError("Model has not been trained yet.")
-        data = np.array(data).reshape(1, -1)
-        data = data.astype(np.float32)  # Ensure data is in float32 format
+        data = np.array(data)
+        if len(data.shape) == 3:
+            data = np.expand_dims(data, -1)
+        data = data.reshape(1, *data.shape[-3:])  # Ensure batch dimension
+        data = data.astype(np.float32)
         answerConfidences = self.confidenceModel.predict(data)[0]
         answerVal = np.argmax(answerConfidences)
         return answerVal, answerConfidences[answerVal]
