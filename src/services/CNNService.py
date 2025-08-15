@@ -1,7 +1,5 @@
 import utils.PCAHelper as helper
-import machineLearners.PCA as pca
 import machineLearners.CNNHandler as cnnhandler
-import utils.ImageHelper as image_helper
 
 class CNNService:
     def __init__(self):

@@ -1,5 +1,3 @@
-import numpy as np 
-import math
 import scipy.io as scio
 import os
 

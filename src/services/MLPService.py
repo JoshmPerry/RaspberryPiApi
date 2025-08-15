@@ -1,7 +1,7 @@
-import utils.PCAHelper as helper
+import utils.PCAHelper as dataReader
+import utils.DataHelper as dataHelper
 import machineLearners.PCA as pca
 import machineLearners.MLPHandler as mlphandler
-import utils.ImageHelper as image_helper
 
 class MLPService:
     def __init__(self):
@@ -9,10 +9,15 @@ class MLPService:
         self.MLPHandler = mlphandler.MLPHandler()
         self.train("./data/PCA/USPS.mat")
     def train(self, path):
-        data, ys = helper.load_data(path)
-        self.pca.train(data)
-        simplifiedData = self.pca.test(data)
-        self.MLPHandler.train(simplifiedData, ys)
+        Xs, Ys = dataReader.load_data(path)
+        data, ys = dataHelper.shuffle(Xs, Ys)
+        trainData, testData, trainLabels, testLabels = dataHelper.train_valid_split(data, ys, 0.8)
+        self.pca.train(trainData)
+        simplifiedTrainData = self.pca.test(trainData)
+        simplifiedTestData = self.pca.test(testData)
+        trainDataset = dataHelper.transform_to_dataset(simplifiedTrainData, trainLabels)
+        validationDataset = dataHelper.transform_to_dataset(simplifiedTestData, testLabels)
+        self.MLPHandler.train(trainDataset, validationDataset)
     def predict(self, data):
-        simplifiedData = image_helper.preprocess_image(self.pca.test(data))
+        simplifiedData = self.pca.test(data)
         return self.MLPHandler.predict(simplifiedData)

@@ -1,11 +1,5 @@
-import utils.MLPHelper as helper
 import machineLearners.CNN as cnn
-import torch
-import torch.nn as nn
-import torch.optim as optim
 import numpy as np
-import tensorflow as tf
-from torch.utils.data import TensorDataset, DataLoader
 
 SAVE_MODEL_PATH = './data/models/cnn_model.keras'
 REBUILD_MODEL = False
@@ -31,6 +25,5 @@ class CNNHandler:
             print("Model trained and saved.")
 
     def predict(self, data):
-       data = np.array(data)
-       reformattedData = data.reshape(1, 16, 16, 1)
+       reformattedData = np.array(data).reshape(1, 16, 16, 1)
        return self.cnn.predict(reformattedData)
