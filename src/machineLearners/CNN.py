@@ -19,27 +19,12 @@ class CNN:
         ])
         self.confidenceModel = None
 
-    def train(self, data, labels):
-        # Scramble (shuffle) data order before splitting
-        idx = np.random.permutation(len(data))
-        x_all = np.array(data)[idx]
-        y_all = np.array(labels)[idx]
-
-        x_all = x_all.astype(np.float32)
-        if len(x_all.shape) == 3:
-            # Add channel dimension if missing (e.g., grayscale images)
-            x_all = np.expand_dims(x_all, -1)
-
-        # Split into train/test (e.g., 80/20 split)
-        split_idx = int(0.8 * len(x_all))
-        x_train, x_test = x_all[:split_idx], x_all[split_idx:]
-        y_train, y_test = y_all[:split_idx], y_all[split_idx:]
+    def train(self, trainDataset, validationDataset):
         self.model.compile(optimizer='adam',
             loss='sparse_categorical_crossentropy',
             metrics=['accuracy'])
 
-        self.model.fit(x_train, y_train, epochs=10)
-        self.model.evaluate(x_test, y_test)
+        self.model.fit(trainDataset, validation_data=validationDataset, epochs=10)
 
         self.confidenceModel = tf.keras.Sequential([
             self.model,
@@ -57,11 +42,6 @@ class CNN:
     def predict(self, data):
         if self.confidenceModel is None:
             raise ValueError("Model has not been trained yet.")
-        data = np.array(data)
-        if len(data.shape) == 3:
-            data = np.expand_dims(data, -1)
-        data = data.reshape(1, *data.shape[-3:])  # Ensure batch dimension
-        data = data.astype(np.float32)
         answerConfidences = self.confidenceModel.predict(data)[0]
         answerVal = np.argmax(answerConfidences)
         return answerVal, answerConfidences[answerVal]

@@ -1,4 +1,5 @@
-import utils.PCAHelper as helper
+import utils.PCAHelper as dataReader
+import utils.DataHelper as dataHelper
 import machineLearners.CNNHandler as cnnhandler
 
 class CNNService:
@@ -6,7 +7,9 @@ class CNNService:
         self.CNNHandler = cnnhandler.CNNHandler()
         self.train("./data/PCA/USPS.mat")
     def train(self, path):
-        data, ys = helper.load_data(path)
-        self.CNNHandler.train(data, ys)
+        data, ys = dataReader.load_data(path)
+        reformattedData = data.reshape(data.shape[0], 16, 16, 1)
+        trainDataset, validationDataset = dataHelper.arrange_data(reformattedData, ys)
+        self.CNNHandler.train(trainDataset, validationDataset)
     def predict(self, data):
         return self.CNNHandler.predict(data)
