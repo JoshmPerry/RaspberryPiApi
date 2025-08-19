@@ -7,7 +7,7 @@ REBUILD_MODEL = False
 
 class VITHandler:
     def __init__(self):
-        self.vit = vit.VIT()
+        self.vit = vit.VIT(14)
 
     def train(self, trainDataset, validationDataset):
         if REBUILD_MODEL:
