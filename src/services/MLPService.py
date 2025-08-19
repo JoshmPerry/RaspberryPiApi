@@ -1,13 +1,13 @@
 import utils.PCAHelper as dataReader
 import utils.DataHelper as dataHelper
-import machineLearners.PCA as pca
-import machineLearners.MLPHandler as mlphandler
+import machineLearners.pca.PCA as pca
+import machineLearners.mlp.MLPHandler as mlphandler
 
 class MLPService:
     def __init__(self):
         self.pca = pca.PCA(60, center_data=False)
         self.MLPHandler = mlphandler.MLPHandler()
-        self.train("./data/PCA/USPS.mat")
+        self.train("./data/training/USPS.mat")
     def train(self, path):
         Xs, Ys = dataReader.load_data(path)
         data, ys = dataHelper.shuffle(Xs, Ys)

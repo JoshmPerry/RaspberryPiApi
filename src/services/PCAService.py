@@ -1,10 +1,10 @@
 import utils.PCAHelper as helper
-import machineLearners.PCA as pca
+import machineLearners.pca.PCA as pca
 
 class PCAService:
     def __init__(self):
         self.pca = pca.PCA(60, center_data=False)
-        self.train("./data/PCA/USPS.mat")
+        self.train("./data/training/USPS.mat")
     def train(self, path):
         data, _ = helper.load_data(path)
         self.pca.train(data)
